@@ -1,0 +1,45 @@
+class Solution {
+    //rajputmayank07
+public:
+//method 1: floyd's tortoise and hare detection(cycle detection methohd) Time complexity =O(n) Space complexity = O(1);
+//we will be treating array a a linked list and here value at an index point to that index. we will use this to iterate and find the cycle
+//
+    int findDuplicate(vector<int>& nums) {
+        int slow=nums[0];
+        int fast= nums[0];
+        //slow chalega 1 step and fast chalega 2 step;
+        do{
+            slow=nums[slow]; //value at index slow ko as index use kiya, ab us index pe jo value hai usey bhi as an index agli baar use karne ke liye slow ko update kiya
+            fast=nums[nums[fast]]; //yahan aesa 2 dafa ho jaayega
+        } while(slow!=fast);
+        //ab hum cycle find karne ke baad cycle kahan se shuru ho rahi wo pata karenge, iske liue
+        slow=nums[0]; //fast jahan tha wahin rehne denge
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return slow; //jahan dono milenge wahi hamara duplicate element hai
+    }
+
+//method 2: Binary search ka use karte huye where we will not use indexes as our range but the values in our array as our range
+//time complexity= O(nlogn) Space complexity = O(1);
+/*int findDuplicate(vector<int>& nums) {
+        int low=1;
+        int high=nums.size()-1;
+        while(low<high){
+            int count=0;
+            int mid=low+(high-low)/2;
+            for(int it:nums){
+                if(it<=mid) count++;
+            }
+            if(count>mid){
+                high=mid;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return low;
+    }
+*/
+};
